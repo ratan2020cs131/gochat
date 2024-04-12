@@ -1,0 +1,19 @@
+svg {
+    max-width: 25em;
+    border-radius: 3px;
+    fill: none;
+    stroke: #c0c0c0;
+    stroke-linecap: round;
+    stroke-width: 8%
+}
+
+use {
+    stroke: yellowgreen;
+    animation: a 2s linear infinite
+}
+
+@keyframes a {
+    to {
+        stroke-dashoffset: 0px
+    }
+}

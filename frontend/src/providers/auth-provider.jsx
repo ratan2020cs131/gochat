@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import LoginComponent from '@/components/login-page/index';
+import Loader from '@/components/loader/loader';
 
 const AuthProvider = ({ children }) => {
     const [logged, setLogged] = useState(undefined)
@@ -19,8 +20,9 @@ const AuthProvider = ({ children }) => {
         <>
             {
                 logged === undefined ?
-                    <div className='flex items-center justify-center min-h-screen'>
-                        <p>Loading</p>
+                    <div className='flex flex-col items-center justify-center min-h-screen'>
+                        <Loader />
+                        <h3 className='text-xl'>Loading</h3>
                     </div> :
                     <>
                         {logged === false ?
