@@ -5,7 +5,7 @@ export default {
     login: async (req, res) => {
         try {
             const { username, email, password } = req.body;
-            const result = await User.findOne({ $or: [{ username }, { email }] }).populate('friends', 'requests');
+            const result = await User.findOne({ $or: [{ username }, { email }] }).populate('friends', '_id name username').populate('requests', '_id name username');
             if (result) {
                 const verified = await bcrypt.compare(password, result.password);
                 if (verified) {
@@ -14,6 +14,9 @@ export default {
                 }
                 else
                     res.status(401).send({ message: 'wrong password' })
+            }
+            else {
+                res.status(404).send({ message: 'user not found' })
             }
         } catch (error) {
             console.log("login error: ", error.message);
