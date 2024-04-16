@@ -2,10 +2,11 @@
 import * as React from "react";
 import { NextUIProvider } from "@nextui-org/react";
 
-export default ({ children }) => {
+const NextUiProvider = ({ children }) => {
     return (
         <NextUIProvider>
             {children}
         </NextUIProvider>
     );
 }
+export default NextUiProvider;
