@@ -1,8 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Input } from "@nextui-org/react";
-import { SearchIcon } from '@/assets/svg/Search';
+import { SearchIcon } from '@/assets/svg/index';
 import UserCard from './user-card';
+import Image from 'next/image';
 
 const Explore = () => {
     const [beingSearch, setBeingSearch] = useState();
@@ -17,7 +18,7 @@ const Explore = () => {
                 onFocus={() => setBeingSearch(true)}
                 onBlur={() => setBeingSearch(false)}
                 startContent={
-                    <SearchIcon />
+                    <Image src={SearchIcon} alt="ico" width={20}/>
                 }
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}

@@ -1,5 +1,9 @@
-import SearchIcon from './Search';
+import SearchIcon from './search.svg';
+import UserIcon from './user.svg';
+import LogoutIcon from './logout.svg';
 
-export default {
-    SearchIcon
+export {
+    SearchIcon,
+    UserIcon,
+    LogoutIcon
 }

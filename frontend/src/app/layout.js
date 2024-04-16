@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import NextUiProvider from "@/providers/nextui-provider";
 import AuthProvider from "@/providers/auth-provider";
+import ReduxProvider from "@/providers/redux-provider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -15,14 +16,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>
-        <NextUiProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
-        </NextUiProvider>
-      </body>
-    </html>
+    <ReduxProvider>
+      <html lang="en">
+        <body className={poppins.className}>
+          <NextUiProvider>
+            <AuthProvider>
+              {children}
+            </AuthProvider>
+          </NextUiProvider>
+        </body>
+      </html>
+    </ReduxProvider>
   );
 }

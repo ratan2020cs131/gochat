@@ -2,17 +2,18 @@
 import React, { useState } from 'react'
 import { Input, Button, Link, Divider, Card } from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
 
-const Index = ({ setLogged }) => {
-  const router = useRouter();
+const Index = ({ setLogin }) => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const handleLogin = () => {
     setLoading(!loading)
     setTimeout(() => {
       setLoading(false)
       window.localStorage.setItem('token', "123")
-      setLogged(true)
-    }, 3000)
+      dispatch(setLogin(true))
+    }, 1000)
   }
 
   return (

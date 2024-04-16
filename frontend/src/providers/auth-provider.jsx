@@ -2,15 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import LoginComponent from '@/components/login-page/index';
 import Loader from '@/components/loader/loader';
-
+import { useSelector } from 'react-redux';
+import { setLogin } from '@/redux/auth/authSlice';
 const AuthProvider = ({ children }) => {
-    const [logged, setLogged] = useState(undefined)
+    // const [logged, setLogin] = useState(undefined)
+    const logged = useSelector(state => state.auth.isLogged);
     const checkToken = () => {
+        console.log(logged);
         const token = window.localStorage.getItem('token');
         if (token)
-            setLogged(true)
+            setLogin(true)
         else
-            setLogged(false)
+            setLogin(false)
     }
     useEffect(() => {
         checkToken();
@@ -26,7 +29,7 @@ const AuthProvider = ({ children }) => {
                     </div> :
                     <>
                         {logged === false ?
-                            <LoginComponent setLogged={setLogged} /> :
+                            <LoginComponent setLogin={setLogin} /> :
                             (children)
                         }
                     </>
