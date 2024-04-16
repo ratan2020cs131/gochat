@@ -10,7 +10,8 @@ export default {
                 const verified = await bcrypt.compare(password, result.password);
                 if (verified) {
                     const { name, username, email, requests, friends } = result;
-                    res.send({ name, username, email, requests, friends })
+                    const token = await result.generateToken();
+                    res.send({ token, data: { name, username, email, requests, friends } })
                 }
                 else
                     res.status(401).send({ message: 'wrong password' })
@@ -38,6 +39,17 @@ export default {
             }
         } catch (error) {
             console.log("signup error: ", error.message);
+        }
+    },
+
+    //profile constroller
+    profile: async (req, res) => {
+        try {
+            if (req.user) {
+                res.send(req.user)
+            }
+        } catch (error) {
+            console.log("profile error: ", error.message);
         }
     }
 }
