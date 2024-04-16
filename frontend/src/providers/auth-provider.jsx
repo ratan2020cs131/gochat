@@ -2,18 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import LoginComponent from '@/components/login-page/index';
 import Loader from '@/components/loader/loader';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLogin } from '@/redux/auth/authSlice';
 const AuthProvider = ({ children }) => {
+    const dispatch = useDispatch();
     // const [logged, setLogin] = useState(undefined)
     const logged = useSelector(state => state.auth.isLogged);
     const checkToken = () => {
         console.log(logged);
         const token = window.localStorage.getItem('token');
         if (token)
-            setLogin(true)
+            dispatch(setLogin(true))
         else
-            setLogin(false)
+            dispatch(setLogin(false))
     }
     useEffect(() => {
         checkToken();
