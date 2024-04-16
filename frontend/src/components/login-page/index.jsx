@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { Input, Button, Link, Divider, Card } from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
+import { auth } from '@/utils/apis';
+
 
 const Index = ({ setLogin }) => {
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const Index = ({ setLogin }) => {
         <Button
           className="text-lg w-full py-6"
           color="primary" variant={loading ? "light" : "flat"}
-          onClick={handleLogin}
+          onPress={auth.login}
           isLoading={loading}
         >
           {loading ? 'Loading' : 'Login'}

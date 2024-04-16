@@ -5,7 +5,6 @@ import { LogoutIcon, UserIcon } from '@/assets/svg';
 import Image from 'next/image';
 import { setLogin } from '@/redux/auth/authSlice';
 import { useDispatch } from 'react-redux';
-import { auth } from '@/utils/apis';
 
 const Sidebar = () => {
     const dispatch = useDispatch();
@@ -29,7 +28,6 @@ const Sidebar = () => {
                                 endContent={
                                     <Image src={UserIcon} alt="ico" width={18} />
                                 }
-                                onPress={auth.login}
                             >
                                 Profile
                             </Button>
