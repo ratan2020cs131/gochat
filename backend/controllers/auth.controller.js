@@ -4,8 +4,8 @@ import bcrypt from 'bcrypt';
 export default {
     login: async (req, res) => {
         try {
-            const { username, email, password } = req.body;
-            const result = await User.findOne({ $or: [{ username }, { email }] }).populate('friends', '_id name username').populate('requests', '_id name username');
+            const { email, password } = req.body;
+            const result = await User.findOne({ $or: [{ username: email }, { email }] }).populate('friends', '_id name username').populate('requests', '_id name username');
             if (result) {
                 const verified = await bcrypt.compare(password, result.password);
                 if (verified) {

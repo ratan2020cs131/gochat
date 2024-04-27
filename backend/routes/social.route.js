@@ -5,7 +5,8 @@ const router = Router();
 
 router
     .post('/send-request', socialController.sendRequest)
-    .post('/accept-request', socialController.acceptRequest);
+    .post('/accept-request', socialController.acceptRequest)
+    .post('/message', socialController.sendMessage)
 
 
 const socialRoute = router;

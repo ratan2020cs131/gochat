@@ -4,18 +4,31 @@ import { Input, Button, Link, Divider, Card } from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { auth } from '@/utils/apis';
-
+import { setLogin } from '@/redux/auth/authSlice';
+import { capitalizeSentence } from '@/utils/utility-func';
 
 const Index = ({ setLogin }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const handleLogin = () => {
-    setLoading(!loading)
-    setTimeout(() => {
-      setLoading(false)
-      window.localStorage.setItem('token', "123")
+  const [error, setError] = useState('')
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handleChange = (e) => setCredentials({ ...credentials, [e.target.name]: e.target.value })
+
+  const loginHandler = async () => {
+    setError('')
+    setLoading(true);
+    const res = await auth.login(credentials);
+    if (res.status === 200) {
+      window.localStorage.setItem('token', res.token)
       dispatch(setLogin(true))
-    }, 1000)
+    } else if (res.status === 401) {
+      setError(capitalizeSentence(res?.data?.message))
+    }
+    setLoading(false)
   }
 
   return (
@@ -31,17 +44,18 @@ const Index = ({ setLogin }) => {
           <Divider orientation="horizontal" />
           <h2 className='absolute bg-white p-2'>or</h2>
         </div>
-        <Input type="email" variant={"flat"} label="Email" />
-        <Input type="password" variant={"flat"} label="Password" />
-        <Link href="#" className='px-2'>Reset password</Link>
+        <Input type="email" variant={"flat"} label="Email" name="email" onChange={handleChange} value={credentials?.email} />
+        <Input type="password" variant={"flat"} label="Password" name="password" onChange={handleChange} value={credentials?.password} />
+        <Link href="#" className='px-2 text-[12px]'>Reset password</Link>
         <Button
           className="text-lg w-full py-6"
           color="primary" variant={loading ? "light" : "flat"}
-          onPress={auth.login}
+          onPress={loginHandler}
           isLoading={loading}
         >
-          {loading ? 'Loading' : 'Login'}
+          {loading ? '' : 'Login'}
         </Button>
+        <h6 className='text-center text-[13px] h-[15px] text-red-500'>{error && error}</h6>
       </Card>
     </div >
   )

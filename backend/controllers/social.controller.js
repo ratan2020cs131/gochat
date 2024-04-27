@@ -1,4 +1,7 @@
 import User from "../database/models/user.model.js";
+import chalk from 'chalk';
+import { emitRoomSocketEvent } from "../socket/socket.index.js";
+import socketEvent from "../socket/socket.event.js";
 
 export default {
     //send request controller
@@ -31,6 +34,17 @@ export default {
             res.send({ message: 'request accepted' })
         } catch (error) {
             console.log("accept request error: ", error.message);
+        }
+    },
+
+    //send message controller
+    sendMessage: async (req, res) => {
+        try {
+            const { chatId, message } = req.body;
+            emitRoomSocketEvent(req, socketEvent.NEW_MSG, chatId, message);
+            res.send({ message: 'message sent' })
+        } catch (error) {
+            console.log('error sending message: ', chalk.red(error?.message));
         }
     }
 }
