@@ -15,6 +15,15 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      keyframes: {
+        spin: {
+          '0%, 100%': { transform: 'rotate(0 deg)' },
+          '50%': { transform: 'rotate(180 deg)' },
+        },
+      },
+      animation: {
+        spin: 'spin 1s infinite', // Define the bounce animation
+      },
     },
   },
   darkMode: "class",

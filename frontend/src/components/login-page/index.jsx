@@ -7,7 +7,7 @@ import { auth } from '@/utils/apis';
 import { setLogin } from '@/redux/auth/authSlice';
 import { capitalizeSentence } from '@/utils/utility-func';
 
-const Index = ({ setLogin }) => {
+const Index = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('')
@@ -23,7 +23,7 @@ const Index = ({ setLogin }) => {
     setLoading(true);
     const res = await auth.login(credentials);
     if (res.status === 200) {
-      window.localStorage.setItem('token', res.token)
+      window.localStorage.setItem('token', res?.data?.token)
       dispatch(setLogin(true))
     } else if (res.status === 401) {
       setError(capitalizeSentence(res?.data?.message))

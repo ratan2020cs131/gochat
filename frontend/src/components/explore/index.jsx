@@ -18,20 +18,20 @@ const Explore = () => {
                 onFocus={() => setBeingSearch(true)}
                 onBlur={() => setBeingSearch(false)}
                 startContent={
-                    <Image src={SearchIcon} alt="ico" width={20}/>
+                    <Image src={SearchIcon} alt="ico" width={20} />
                 }
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
             />
             {
-                beingSearch || searchInput?.length > 0 ?
+                searchInput?.length > 0 ?
                     <>
                         {searchInput?.length > 0 ?
-                            < UserCard loading={false} /> :
+                            < UserCard loaded={false} /> :
                             null
                         }
                     </> :
-                    <h3 className='w-full font-medium text-left'>Suggestions</h3>
+                    < UserCard loaded={true} />
             }
         </div>
     )

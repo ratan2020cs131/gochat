@@ -6,7 +6,8 @@ import './database/connect.js';
 import { createServer } from 'http'
 import { Server } from 'socket.io';
 import { initSocket } from './socket/socket.index.js';
-import chalk from 'chalk'
+import chalk from 'chalk';
+import NodeCache from 'node-cache';
 
 const app = express();
 const httpServer = createServer(app);
@@ -18,10 +19,13 @@ app.set('io', io)
 import routes from './routes/index.js';
 
 app.use(cors({
-    origin:['http://localhost:3000']
+    origin: ['http://localhost:3000']
 }))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+export const nodeCache = new NodeCache({
+    stdTTL: 60
+})
 
 app.use('/api', routes)
 

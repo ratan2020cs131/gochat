@@ -42,9 +42,27 @@ export default {
         try {
             const { chatId, message } = req.body;
             emitRoomSocketEvent(req, socketEvent.NEW_MSG, chatId, message);
-            res.send({ message: 'message sent' })
+            res.send({ message: 'message sent' });
         } catch (error) {
             console.log('error sending message: ', chalk.red(error?.message));
+        }
+    },
+
+    getPeople: async (req, res) => {
+        try {
+            const search = req.query.username;
+            const result = await User.find({
+                $or: [
+                    { name: { $regex: ".*" + search + ".*", $options: 'i' } },
+                    { username: { $regex: ".*" + search + ".*", $options: 'i' } }
+                ]
+            })
+            if (result)
+                res.send({ result })
+            else
+                res.status(404).send({ message: 'not found' })
+        } catch (error) {
+            console.log('error searching people: ', error?.message);
         }
     }
 }

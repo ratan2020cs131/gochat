@@ -9,7 +9,6 @@ const AuthProvider = ({ children }) => {
     // const [logged, setLogin] = useState(undefined)
     const logged = useSelector(state => state.auth.isLogged);
     const checkToken = () => {
-        console.log(logged);
         const token = window.localStorage.getItem('token');
         if (token)
             dispatch(setLogin(true))
@@ -22,18 +21,17 @@ const AuthProvider = ({ children }) => {
 
     return (
         <>
-            {
-                logged === undefined ?
-                    <div className='flex flex-col items-center justify-center min-h-screen'>
-                        <Loader />
-                        <h3 className='text-xl'>Loading</h3>
-                    </div> :
-                    <>
-                        {logged === false ?
-                            <LoginComponent setLogin={setLogin} /> :
-                            (children)
-                        }
-                    </>
+            {logged === undefined ?
+                <div className='flex flex-col items-center justify-center min-h-screen'>
+                    <Loader />
+                    <h3 className='text-xl'>Loading</h3>
+                </div> :
+                <>
+                    {logged === false ?
+                        <LoginComponent /> :
+                        (children)
+                    }
+                </>
             }
         </>
     )
